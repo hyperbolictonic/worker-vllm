@@ -1,0 +1,11 @@
+# Start from the same worker image RunPod uses (stable baseline)
+FROM runpod-workers/worker-vllm:latest
+
+# Upgrade transformers to include Qwen3-VL pad_token_id fix (merged Jan 22, 2026)
+# Installing from main is the simplest way to guarantee the fix is present.
+RUN pip install --no-cache-dir -U \
+    "git+https://github.com/huggingface/transformers.git"
+
+# Optional but often helpful for VL stacks (safe to include)
+RUN pip install --no-cache-dir -U \
+    "accelerate" "pillow"
